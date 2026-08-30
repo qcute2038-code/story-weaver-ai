@@ -200,7 +200,9 @@ async function streamOnce(key: string, body: Record<string, unknown>): Promise<S
         }
         const choice = parsed.choices?.[0];
         if (!choice) continue;
-        // Thinking output is dropped on the floor, never appended.
+        // Hidden reasoning is dropped, but it still proves the provider is alive.
+        // Without this, Qwen's internal pass was mistaken for a frozen request.
+        if (choice.delta?.reasoning) lastContent = Date.now();
         const piece = choice.delta?.content ?? choice.message?.content ?? "";
         if (piece) {
           out += piece;

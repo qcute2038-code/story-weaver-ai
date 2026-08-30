@@ -47,9 +47,8 @@ export async function buildPlan(args: {
   // Step one: a short, cheap call that fixes the title, the world and the arc.
   const arcRaw = await chat({
     keyIndex: 0,
-    stream: false,
     temperature: 0.8,
-    maxTokens: 2500,
+    maxTokens: 1000,
     minChars: 120,
     messages: [
       { role: "system", content: SYSTEM_PROMPT },
@@ -100,9 +99,8 @@ ${isLastSlice ? "आखिरी अध्याय का अंत खुल�
         try {
           const raw = await chat({
             keyIndex: b + attempt,
-            stream: false,
             temperature: 0.85,
-            maxTokens: 4000,
+            maxTokens: 1800,
             minChars: 150,
             messages: [
               { role: "system", content: SYSTEM_PROMPT },
